@@ -1,70 +1,45 @@
-# NextBuy — E-Commerce Analytics & ML
+# NextBuy — E-commerce Analytics & Recommendations
 
-> Data analysis and machine learning over 5 e-commerce datasets — answering 8 business questions and training 2 production-grade predictive models.
+> Exploratory analysis of a multi-table grocery e-commerce dataset, answering 8 business questions and powering a product-recommendation engine built on association rules.
 
-[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
-[![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-F7931E?style=flat&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-dashboard-FF4B4B?style=flat&logo=streamlit&logoColor=white)](https://streamlit.io/)
+**Epitech Bachelor · Year 1 · Data Analysis (B-DAT-201) · Mar 2026**
+Source code is private under Epitech's academic policy. Happy to walk you through the notebooks or demo the dashboards → **imran.nogueira@gmail.com**
 
-## What it is
+## Overview
 
-Full data pipeline on a multi-table e-commerce dataset (orders, products, departments, aisles, order_products). The project answers **8 business questions** through EDA, then trains **2 machine learning models**: an association-rules engine for product recommendations, and a RandomForest regressor for department-level performance prediction.
-
-## Stack
-
-| Layer            | Technology                                  |
-| ---------------- | ------------------------------------------- |
-| **Analysis**     | pandas, numpy, matplotlib, seaborn          |
-| **ML — Model 1** | Apriori (mlxtend) — association rules       |
-| **ML — Model 2** | scikit-learn RandomForest (300 estimators)  |
-| **Dashboards**   | Streamlit (one per model)                   |
-| **Notebooks**    | Jupyter for exploration & model development |
+Five related tables — orders, products, departments, aisles and order lines — cleaned, joined and analyzed to answer concrete business questions, then turned into a recommendation engine that suggests complementary products for a given cart.
 
 ## Business questions answered
 
 1. Top 10 best-selling products
 2. Top 10 least-sold products by day of the week
-3. Top 10 products added first to the cart
-4. Top 10 products co-added with the most popular item
+3. Top 10 products added to the cart first
+4. Top 10 products bought together with the most popular item
 5. Top 10 most reordered products
-6. When do customers usually order (by day)
+6. Which days customers order most
 7. Which department offers the fewest products
 8. Sales by department × day of the week (heatmap)
 
-## Models
+## Stack
 
-### Model 1 — Product recommendation
+| Layer | Tech |
+|---|---|
+| Analysis | Python, pandas, NumPy, matplotlib, seaborn, Jupyter |
+| Recommendations | mlxtend — Apriori + association rules |
+| Regression | scikit-learn RandomForestRegressor |
+| Dashboards | Streamlit (one per model), models serialized with joblib |
 
-- **Algorithm** : Apriori association rules mining
-- **Metrics** : Support, Confidence, Lift
-- **Use case** : suggest complementary products based on current cart
+## How the recommendation engine works
 
-### Model 2 — Department efficiency prediction
+1. Keep the 100 best-selling products and build an order × product basket matrix.
+2. Mine frequent itemsets with **Apriori** (`min_support = 0.01`).
+3. Derive **association rules**, keep those with lift ≥ 1, rank by confidence.
+4. For a given cart, suggest the consequents of the strongest matching rules — served in a Streamlit dashboard.
 
-- **Algorithm** : RandomForest Regressor (300 estimators)
-- **Performance** : **R² = 0.990**, MAE = 0.101, RMSE = 0.219
-- **Use case** : predict department performance by day of the week
-- Models serialized to `.pkl` for dashboard consumption
+## What I'd do differently
 
-## What I learned
+The second model, a RandomForest predicting department activity by day, reported R² = 0.99. Reviewing it afterwards, the target was derived from a column that was also among the features — a textbook **target leakage**, which makes that score meaningless. The fix: build the target from a separate signal and validate on held-out days rather than a random split. I keep this here on purpose: catching leakage is part of the job.
 
-- **End-to-end ML pipeline** — from raw CSV to trained model to deployed Streamlit dashboard
-- **Hyperparameter tuning** to push RandomForest to R²=0.99 without overfitting
-- **Association rules** beyond cosine similarity — when Apriori actually outperforms collaborative filtering for product-bundling
-- **Notebook hygiene** — keeping `main.ipynb` and `model.ipynb` separated by concern (EDA vs. model dev)
-- **Communicating findings** — every question gets a chart and a written interpretation, not just the number
+## Contact
 
-## Project context
-
-- **Year** : 2025–2026
-- **School** : Epitech Bachelor, Mulhouse
-- **Team** : 2 members
-- **Course** : Data Analysis (B-DAT-201)
-
-## Note
-
-This is a portfolio summary. The full source code, notebooks, and trained models are private per Epitech academic policy. Available on request for recruiters.
-
----
-
-[Imran Nogueira](https://github.com/imrannnn30)
+Notebook walkthrough or dashboard demo on request → **imran.nogueira@gmail.com** · [Portfolio](https://imran-nogueira.github.io)
