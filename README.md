@@ -1,6 +1,4 @@
-# NextBuy — E-commerce Analytics & Recommendations
-
-> Exploratory analysis of a multi-table grocery e-commerce dataset, answering 8 business questions and powering a product-recommendation engine built on association rules.
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.png"><img alt="NextBuy — E-commerce analytics answering 8 business questions, and a recommendation engine built on association rules." src="assets/banner-light.png"></picture>
 
 **Epitech Bachelor · Year 1 · Data Analysis (B-DAT-201) · Mar 2026**
 Source code is private under Epitech's academic policy. Happy to walk you through the notebooks or demo the dashboards → **imran.nogueira@gmail.com**
